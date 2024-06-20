@@ -6,9 +6,19 @@ document.addEventListener("DOMContentLoaded", () => {
     function showNextMessage() {
         if (index < messages.length) {
             const message = messages[index];
+            const content = message.textContent;
+            message.textContent = "";
+
+            const typingAnimation = setInterval(() => {
+                message.textContent += content.charAt(message.textContent.length);
+                if (message.textContent === content) {
+                    clearInterval(typingAnimation);
+                    index++;
+                    setTimeout(showNextMessage, 1000);
+                }
+            }, 50);
+
             message.style.display = "block";
-            index++;
-            setTimeout(showNextMessage, 1000);
         }
     }
 
